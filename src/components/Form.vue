@@ -9,7 +9,7 @@
     </div>
     <div>
         <ul>
-            <li v-for="entity in list">{{ entity.id }} - {{ entity.name }}</li>
+            <li v-for="entity in list" :key="entity.id">{{ entity.id }} - {{ entity.name }}</li>
         </ul>
     </div>
   </template>
@@ -20,6 +20,7 @@
   import { useApiStore } from '../store/api';
   import { SelectValue } from 'ant-design-vue/lib/select';
   import { api_domain } from '../config';
+import { notification } from 'ant-design-vue';
 
   type Entity = {
     id: number,
@@ -58,10 +59,16 @@
         token: apiStore.token
       }
     }).then((response)=>{
-      list.value.push({
-        id: response.data.content._embedded[option.value.value][0].id,
-        name: option.value.label,
-      })
+        if(response.data.success){
+            list.value.push({
+                id: response.data.content._embedded[option.value.value][0].id,
+                name: option.value.label,
+            })
+        } else {
+            notification.error({
+                message: response.data.title
+            })
+        }
       loading.value = false
     })
   }
