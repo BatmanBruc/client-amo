@@ -1,4 +1,5 @@
 <template>
+    
     <div :style="{ marginBottom: '20px' }">
         <a-input placeholder="id" v-model:value="id" />
     </div>
@@ -10,8 +11,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import axios from 'axios';
-import { useApiStore } from '../store/api';
 import { notification } from 'ant-design-vue';
+import { useApiStore } from '../store/api';
 import { api_domain } from '../config';
 
 const apiStore = useApiStore()
