@@ -3,7 +3,7 @@
         <a-input placeholder="id" v-model:value="id" />
     </div>
     <div>
-        <a-button @click="join">Войти</a-button>
+        <a-button @click="join" :loading="loading">Войти</a-button>
     </div>
 </template>
 
@@ -17,7 +17,9 @@ import { api_domain } from '../config';
 const apiStore = useApiStore()
 
 const id = ref('')
+const loading = ref(false)
 const join = () => {
+    loading.value = true 
     axios({
         method: 'POST',
         url: api_domain + '/auth/get_api',
@@ -32,6 +34,7 @@ const join = () => {
                 message:  response.data.title
             })
         }
+        loading.value = false 
     })
 }
 </script>
